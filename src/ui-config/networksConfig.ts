@@ -137,13 +137,14 @@ export const networkConfigs: Record<string, BaseNetworkConfig> = {
   [ChainId.mumbai]: {
     name: 'Mumbai',
     publicJsonRPCUrl: [
+      'https://polygon-mumbai.infura.io/v3/4e8feb549dcc4f8681d09a0dc36b86b5',
       'https://rpc.ankr.com/polygon_mumbai',
       'https://rpc-mumbai.maticvigil.com',
       'https://polygon-testnet.public.blastapi.io',
       'https://polygon-mumbai.g.alchemy.com/v2/demo',
     ],
-    publicJsonRPCWSUrl: 'wss://polygon-mumbai.g.alchemy.com/v2/demo',
-    // protocolDataUrl: 'https://api.thegraph.com/subgraphs/name/aave/aave-v2-polygon-mumbai',
+    publicJsonRPCWSUrl: 'wss://polygon-mumbai.infura.io/v3/4e8feb549dcc4f8681d09a0dc36b86b5',
+    // protocolDataUrl: 'https://api.thegraph.com/subgraphs/name/shi-vaa/aave-alphalab-mumbai',
     baseAssetSymbol: 'MATIC',
     wrappedBaseAssetSymbol: 'WMATIC',
     baseAssetDecimals: 18,

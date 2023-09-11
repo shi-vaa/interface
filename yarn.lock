@@ -1333,7 +1333,7 @@
   resolved "https://registry.yarnpkg.com/@bgd-labs/aave-address-book/-/aave-address-book-2.1.0.tgz#05710a23e69177d6748be20fb2449a2132ae1099"
   integrity sha512-n3M+QsadZ8Affg8e4p29b1GvUylLXem01YHlktlb8984lcCGWSZEHBoMtg6Mx0zcd2uvZVN1C3DHiW49j54+bQ==
 
-"@coinbase/wallet-sdk@3.1.0", "@coinbase/wallet-sdk@^3.0.4":
+"@coinbase/wallet-sdk@^3.0.4":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.1.0.tgz#294fbd52cf7262b68137731ac414f0cf5a0580a3"
   integrity sha512-8IGfVklv/CMfCT4qd9KfL0IwlINsIgSlW1oQB/or8uSY9wAqoY8lIoQVpOyFx7YDK094Xfd9alhulZtRZNJBjw==

@@ -200,6 +200,7 @@ export const createPoolSlice: StateCreator<
                 produce(state, (draft) => {
                   if (!draft.data.get(currentChainId)) draft.data.set(currentChainId, new Map());
                   if (!draft.data.get(currentChainId)?.get(lendingPoolAddressProvider)) {
+                    console.log(lendingPoolAddressProvider);
                     draft.data.get(currentChainId)!.set(lendingPoolAddressProvider, {
                       reserves: reservesResponse.reservesData,
                       baseCurrencyData: reservesResponse.baseCurrencyData,
