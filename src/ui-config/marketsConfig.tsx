@@ -10,18 +10,18 @@ import {
   AaveV3Arbitrum,
   AaveV3ArbitrumGoerli,
   AaveV3Avalanche,
-  AaveV3Base,
   AaveV3Ethereum,
   AaveV3Fantom,
   AaveV3FantomTestnet,
   AaveV3Fuji,
+  AaveV3Goerli,
   AaveV3Harmony,
   AaveV3Metis,
   AaveV3Mumbai,
   AaveV3Optimism,
   AaveV3OptimismGoerli,
   AaveV3Polygon,
-  AaveV3ScrollSepolia,
+  AaveV3ScrollAlpha,
   AaveV3Sepolia,
 } from '@bgd-labs/aave-address-book';
 import { ReactNode } from 'react';
@@ -43,7 +43,6 @@ export type MarketDataType = {
     incentives?: boolean;
     permissions?: boolean;
     debtSwitch?: boolean;
-    withdrawAndSwitch?: boolean;
   };
   isFork?: boolean;
   permissionComponent?: ReactNode;
@@ -56,7 +55,6 @@ export type MarketDataType = {
     SWAP_COLLATERAL_ADAPTER?: string;
     REPAY_WITH_COLLATERAL_ADAPTER?: string;
     DEBT_SWITCH_ADAPTER?: string;
-    WITHDRAW_SWITCH_ADAPTER?: string;
     FAUCET?: string;
     PERMISSION_MANAGER?: string;
     WALLET_BALANCE_PROVIDER: string;
@@ -80,13 +78,14 @@ export type MarketDataType = {
 };
 
 export enum CustomMarket {
-  // v3 test networks, all v3.0.1
+  // v3 test networks, all v3.0.1 with permissioned faucet
   proto_arbitrum_goerli_v3 = 'proto_arbitrum_goerli_v3',
   proto_mumbai_v3 = 'proto_mumbai_v3',
   proto_fantom_testnet_v3 = 'proto_fantom_testnet_v3',
   proto_fuji_v3 = 'proto_fuji_v3',
+  proto_goerli_v3 = 'proto_goerli_v3',
   proto_optimism_goerli_v3 = 'proto_optimism_goerli_v3',
-  proto_scroll_sepolia_v3 = 'proto_scroll_sepolia_v3',
+  proto_scroll_alpha_v3 = 'proto_scroll_alpha_v3',
   proto_sepolia_v3 = 'proto_sepolia_v3',
   // v3 mainnets
   proto_mainnet_v3 = 'proto_mainnet_v3',
@@ -97,7 +96,6 @@ export enum CustomMarket {
   proto_polygon_v3 = 'proto_polygon_v3',
   proto_arbitrum_v3 = 'proto_arbitrum_v3',
   proto_metis_v3 = 'proto_metis_v3',
-  proto_base_v3 = 'proto_base_v3',
   // v2
   proto_mainnet = 'proto_mainnet',
   proto_avalanche = 'proto_avalanche',
@@ -123,8 +121,7 @@ export const marketsData: {
       liquiditySwap: true,
       collateralRepay: true,
       incentives: true,
-      withdrawAndSwitch: true,
-      debtSwitch: true,
+      debtSwitch: false,
     },
     subgraphUrl: 'https://api.thegraph.com/subgraphs/name/aave/protocol-v3',
     addresses: {
@@ -139,8 +136,6 @@ export const marketsData: {
       COLLECTOR: AaveV3Ethereum.COLLECTOR,
       GHO_TOKEN_ADDRESS: AaveV3Ethereum.GHO_TOKEN,
       GHO_UI_DATA_PROVIDER: AaveV3Ethereum.UI_GHO_DATA_PROVIDER,
-      WITHDRAW_SWITCH_ADAPTER: AaveV3Ethereum.WITHDRAW_SWAP_ADAPTER,
-      DEBT_SWITCH_ADAPTER: AaveV3Ethereum.DEBT_SWAP_ADAPTER,
     },
     halIntegration: {
       URL: 'https://app.hal.xyz/recipes/aave-v3-track-health-factor',
@@ -288,27 +283,22 @@ export const marketsData: {
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Sepolia.UI_INCENTIVE_DATA_PROVIDER,
     },
   },
-  [CustomMarket.proto_base_v3]: {
-    marketTitle: 'Base',
+  [CustomMarket.proto_goerli_v3]: {
+    marketTitle: 'Ethereum Görli',
     v3: true,
-    chainId: ChainId.base,
+    chainId: ChainId.goerli,
     enabledFeatures: {
-      incentives: true,
+      faucet: true,
     },
-    // TODO: Need subgraph, currently not supported
-    // subgraphUrl: '',
+    // subgraphUrl: 'https://api.thegraph.com/subgraphs/name/aave/protocol-v3-goerli', needs re-deployment
     addresses: {
-      LENDING_POOL_ADDRESS_PROVIDER: AaveV3Base.POOL_ADDRESSES_PROVIDER,
-      LENDING_POOL: AaveV3Base.POOL,
-      WETH_GATEWAY: AaveV3Base.WETH_GATEWAY,
-      WALLET_BALANCE_PROVIDER: AaveV3Base.WALLET_BALANCE_PROVIDER,
-      UI_POOL_DATA_PROVIDER: AaveV3Base.UI_POOL_DATA_PROVIDER,
-      UI_INCENTIVE_DATA_PROVIDER: AaveV3Base.UI_INCENTIVE_DATA_PROVIDER,
-      L2_ENCODER: AaveV3Base.L2_ENCODER,
-      COLLECTOR: AaveV3Base.COLLECTOR,
-      // SWAP_COLLATERAL_ADAPTER: AaveV3Base.SWAP_COLLATERAL_ADAPTER,
-      // REPAY_WITH_COLLATERAL_ADAPTER: AaveV3Base.REPAY_WITH_COLLATERAL_ADAPTER,
-      // DEBT_SWITCH_ADAPTER: AaveV3Base.DEBT_SWAP_ADAPTER,
+      LENDING_POOL_ADDRESS_PROVIDER: AaveV3Goerli.POOL_ADDRESSES_PROVIDER,
+      LENDING_POOL: AaveV3Goerli.POOL,
+      WETH_GATEWAY: AaveV3Goerli.WETH_GATEWAY,
+      FAUCET: AaveV3Goerli.FAUCET,
+      WALLET_BALANCE_PROVIDER: AaveV3Goerli.WALLET_BALANCE_PROVIDER,
+      UI_POOL_DATA_PROVIDER: AaveV3Goerli.UI_POOL_DATA_PROVIDER,
+      UI_INCENTIVE_DATA_PROVIDER: AaveV3Goerli.UI_INCENTIVE_DATA_PROVIDER,
     },
   },
 
@@ -321,7 +311,6 @@ export const marketsData: {
       liquiditySwap: true,
       collateralRepay: true,
       debtSwitch: true,
-      withdrawAndSwitch: true,
     },
     subgraphUrl: 'https://api.thegraph.com/subgraphs/name/aave/protocol-v3-arbitrum',
     addresses: {
@@ -336,7 +325,6 @@ export const marketsData: {
       SWAP_COLLATERAL_ADAPTER: AaveV3Arbitrum.SWAP_COLLATERAL_ADAPTER,
       REPAY_WITH_COLLATERAL_ADAPTER: AaveV3Arbitrum.REPAY_WITH_COLLATERAL_ADAPTER,
       DEBT_SWITCH_ADAPTER: AaveV3Arbitrum.DEBT_SWAP_ADAPTER,
-      WITHDRAW_SWITCH_ADAPTER: AaveV3Arbitrum.WITHDRAW_SWAP_ADAPTER,
     },
     halIntegration: {
       URL: 'https://app.hal.xyz/recipes/aave-v3-track-health-factor',
@@ -356,10 +344,10 @@ export const marketsData: {
       LENDING_POOL_ADDRESS_PROVIDER: '0x4fF937D785954bE14D836Ad057ad719F0cba77aF',
       LENDING_POOL: '0x205c72061e868Cc0D02b20Aa3cF9b73De9b11fAf',
       WETH_GATEWAY: AaveV3ArbitrumGoerli.WETH_GATEWAY,
-      FAUCET: AaveV3ArbitrumGoerli.FAUCET,
-      WALLET_BALANCE_PROVIDER: AaveV3ArbitrumGoerli.WALLET_BALANCE_PROVIDER,
+      FAUCET: '0x452743c21BB0475cE01C1562Cf3a6b17a4298B9a',
+      WALLET_BALANCE_PROVIDER: '0xC793A22772Ae139BfBbCc1F8f439E70A736B259e',
       UI_POOL_DATA_PROVIDER: '0xdfd140e6198e44751dfa0752fe80603cb039d5f1',
-      UI_INCENTIVE_DATA_PROVIDER: AaveV3ArbitrumGoerli.UI_INCENTIVE_DATA_PROVIDER,
+      UI_INCENTIVE_DATA_PROVIDER: '0x5C4090D8BA3cA0C024f862cFC3897CDFCA14B066',
       L2_ENCODER: AaveV3ArbitrumGoerli.L2_ENCODER,
     },
   },
@@ -372,7 +360,6 @@ export const marketsData: {
       incentives: true,
       collateralRepay: true,
       debtSwitch: true,
-      withdrawAndSwitch: true,
     },
     subgraphUrl: 'https://api.thegraph.com/subgraphs/name/aave/protocol-v3-avalanche',
     addresses: {
@@ -386,7 +373,6 @@ export const marketsData: {
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Avalanche.UI_INCENTIVE_DATA_PROVIDER,
       COLLECTOR: AaveV3Avalanche.COLLECTOR,
       DEBT_SWITCH_ADAPTER: AaveV3Avalanche.DEBT_SWAP_ADAPTER,
-      WITHDRAW_SWITCH_ADAPTER: AaveV3Avalanche.WITHDRAW_SWAP_ADAPTER,
     },
     halIntegration: {
       URL: 'https://app.hal.xyz/recipes/aave-v3-track-health-factor',
@@ -432,23 +418,23 @@ export const marketsData: {
       L2_ENCODER: AaveV3OptimismGoerli.L2_ENCODER,
     },
   },
-  [CustomMarket.proto_scroll_sepolia_v3]: {
-    marketTitle: 'Scroll Sepolia',
+  [CustomMarket.proto_scroll_alpha_v3]: {
+    marketTitle: 'Scroll Alpha Görli',
     v3: true,
-    chainId: ChainId.scroll_sepolia,
+    chainId: ChainId.scroll_alpha,
     enabledFeatures: {
       faucet: true,
       incentives: true,
     },
     addresses: {
-      LENDING_POOL_ADDRESS_PROVIDER: AaveV3ScrollSepolia.POOL_ADDRESSES_PROVIDER,
-      LENDING_POOL: AaveV3ScrollSepolia.POOL,
-      WETH_GATEWAY: AaveV3ScrollSepolia.WETH_GATEWAY,
-      FAUCET: AaveV3ScrollSepolia.FAUCET,
-      WALLET_BALANCE_PROVIDER: AaveV3ScrollSepolia.WALLET_BALANCE_PROVIDER,
-      UI_POOL_DATA_PROVIDER: AaveV3ScrollSepolia.UI_POOL_DATA_PROVIDER,
-      UI_INCENTIVE_DATA_PROVIDER: AaveV3ScrollSepolia.UI_INCENTIVE_DATA_PROVIDER,
-      L2_ENCODER: AaveV3ScrollSepolia.L2_ENCODER,
+      LENDING_POOL_ADDRESS_PROVIDER: AaveV3ScrollAlpha.POOL_ADDRESSES_PROVIDER,
+      LENDING_POOL: AaveV3ScrollAlpha.POOL,
+      WETH_GATEWAY: AaveV3ScrollAlpha.WETH_GATEWAY,
+      FAUCET: AaveV3ScrollAlpha.FAUCET,
+      WALLET_BALANCE_PROVIDER: AaveV3ScrollAlpha.WALLET_BALANCE_PROVIDER,
+      UI_POOL_DATA_PROVIDER: AaveV3ScrollAlpha.UI_POOL_DATA_PROVIDER,
+      UI_INCENTIVE_DATA_PROVIDER: AaveV3ScrollAlpha.UI_INCENTIVE_DATA_PROVIDER,
+      L2_ENCODER: AaveV3ScrollAlpha.L2_ENCODER,
     },
   },
   [CustomMarket.proto_fantom_v3]: {
@@ -523,7 +509,6 @@ export const marketsData: {
       collateralRepay: true,
       liquiditySwap: true,
       debtSwitch: true,
-      withdrawAndSwitch: true,
     },
     subgraphUrl: 'https://api.thegraph.com/subgraphs/name/aave/protocol-v3-optimism',
     addresses: {
@@ -538,7 +523,6 @@ export const marketsData: {
       SWAP_COLLATERAL_ADAPTER: AaveV3Optimism.SWAP_COLLATERAL_ADAPTER,
       REPAY_WITH_COLLATERAL_ADAPTER: AaveV3Optimism.REPAY_WITH_COLLATERAL_ADAPTER,
       DEBT_SWITCH_ADAPTER: AaveV3Optimism.DEBT_SWAP_ADAPTER,
-      WITHDRAW_SWITCH_ADAPTER: AaveV3Optimism.WITHDRAW_SWAP_ADAPTER,
     },
   },
   [CustomMarket.proto_polygon_v3]: {
@@ -550,7 +534,6 @@ export const marketsData: {
       incentives: true,
       collateralRepay: true,
       debtSwitch: true,
-      withdrawAndSwitch: true,
     },
     subgraphUrl: 'https://api.thegraph.com/subgraphs/name/aave/protocol-v3-polygon',
     addresses: {
@@ -564,7 +547,6 @@ export const marketsData: {
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Polygon.UI_INCENTIVE_DATA_PROVIDER,
       COLLECTOR: AaveV3Polygon.COLLECTOR,
       DEBT_SWITCH_ADAPTER: AaveV3Polygon.DEBT_SWAP_ADAPTER,
-      WITHDRAW_SWITCH_ADAPTER: AaveV3Polygon.WITHDRAW_SWAP_ADAPTER,
     },
     halIntegration: {
       URL: 'https://app.hal.xyz/recipes/aave-v3-track-health-factor',
@@ -578,15 +560,15 @@ export const marketsData: {
       incentives: true,
       faucet: true,
     },
-    subgraphUrl: 'https://api.thegraph.com/subgraphs/name/shi-vaa/aave-alphalab-mumbai',
+    //  subgraphUrl: 'https://api.thegraph.com/subgraphs/name/aave/protocol-v3-mumbai',  needs re-deployment
     addresses: {
-      LENDING_POOL_ADDRESS_PROVIDER: '0x8F63a1297dDd98821133f3923fe3acC5cC39945C',
-      LENDING_POOL: '0x9b931F8E92E8D904a7B781c36d7B19c3C43FBEE9',
+      LENDING_POOL_ADDRESS_PROVIDER: '0x61D48dAFe5FD608FCcf5F56f156a526e27876Bf0',
+      LENDING_POOL: '0xFb7aAA8481D62288960fCc7E8B7E049636821e28',
       WETH_GATEWAY: AaveV3Mumbai.WETH_GATEWAY,
-      FAUCET: AaveV3Mumbai.FAUCET,
-      WALLET_BALANCE_PROVIDER: AaveV3Mumbai.WALLET_BALANCE_PROVIDER,
-      UI_POOL_DATA_PROVIDER: '0x9e63D8A6dd9704DE81df7854204BF72B46Aea57C',
-      UI_INCENTIVE_DATA_PROVIDER: AaveV3Mumbai.UI_INCENTIVE_DATA_PROVIDER,
+      FAUCET: '0xD3f9287DeE1E226301Ce3706D82218F0e516c5C4',
+      WALLET_BALANCE_PROVIDER: '0x118EcF276FB7b247e83dA7ADde5D66fa0F911973',
+      UI_POOL_DATA_PROVIDER: '0x6507DA2ED35Ce2239AD6fa28783f9C2cf8d1A399',
+      UI_INCENTIVE_DATA_PROVIDER: '0x42Db0B98b41c93C12285dcD421B961Ac8A74178B',
     },
     v3: true,
   },
